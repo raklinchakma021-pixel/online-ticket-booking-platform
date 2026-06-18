@@ -3,8 +3,8 @@ import {
   House,
   Person,
   Ticket,
-  Persons,
-  Megaphone,
+  Plus,
+  CircleInfo,
 } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
 import Link from "next/link";
@@ -13,28 +13,28 @@ export function DashboardSidebar() {
   const navItems = [
     {
       icon: House,
-      href: "/dashboard/admin",
+      href: "/dashboard/vendor",
       label: "Dashboard",
     },
     {
-      icon: Person,
-      href: "/dashboard/admin/profile",
-      label: "Admin Profile",
-    },
-    {
       icon: Ticket,
-      href: "/dashboard/admin/manage-tickets",
-      label: "Manage Tickets",
+      href: "/dashboard/vendor/tickets",
+      label: "My Tickets",
     },
     {
-      icon: Persons,
-      href: "/dashboard/admin/manage-users",
-      label: "Manage Users",
+      icon: Plus,
+      href: "/dashboard/vendor/tickets/add-tickets",
+      label: "Add Ticket",
     },
     {
-      icon: Megaphone,
-      href: "/dashboard/admin/advertise-tickets",
-      label: "Advertise Tickets",
+      icon: Person,
+      href: "/dashboard/vendor/profile",
+      label: "Vendor Profile",
+    },
+    {
+      icon: CircleInfo,
+      href: "/dashboard/vendor/bookings",
+      label: "Ticket Bookings",
     },
   ];
 
@@ -60,7 +60,7 @@ export function DashboardSidebar() {
         <div className="mb-6">
           <h2 className="text-xl font-bold">🎫 TicketBari</h2>
           <p className="text-sm text-default-500">
-            Admin Dashboard
+            Vendor Dashboard
           </p>
         </div>
 
@@ -81,7 +81,7 @@ export function DashboardSidebar() {
 
               <Drawer.Header>
                 <Drawer.Heading>
-                  TicketBari (Admin)
+                  TicketBari (Vendor)
                 </Drawer.Heading>
               </Drawer.Header>
 

@@ -17,7 +17,7 @@ import {
 } from "@heroui/react";
 
 import { Globe, Upload } from "@gravity-ui/icons";
-// import { createTicket } from "@/lib/actions/tickets";
+import { createTicket } from "@/lib/actions/tickets";
 import { redirect } from "next/navigation";
 
 export default function AddTicketPage() {
@@ -101,7 +101,7 @@ export default function AddTicketPage() {
             status: "active",
         };
 
-        // const res = await createTicket(payload);
+        const res = await createTicket(payload);
 
         if (res?.insertedId) {
             toast.success("Ticket added successfully!");
