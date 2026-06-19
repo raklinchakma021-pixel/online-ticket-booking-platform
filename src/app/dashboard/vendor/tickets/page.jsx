@@ -2,231 +2,230 @@ import React from "react";
 import { Table, Chip, Button, Tooltip } from "@heroui/react";
 import { Eye, Edit2, Trash2 } from "lucide-react";
 import { getVendorTickets } from "@/lib/api/tickets";
+import { getLoggedInVendorProfile } from "@/lib/api/vendors";
 
 const VendorTicketsPage = async () => {
-    const vendorId = "vendor_123";
-  // Replace with your API call
-  const tickets = await getVendorTickets(vendorId);
-console.log("Tickets:", tickets);
-console.log("Length:", tickets?.length);
-//   const tickets = [];
+// TODO: Replace with actual logged-in vendor ID
+// const vendorId = "vendor_123";
 
-  const getStatusColor = (status) => {
-    switch (status?.toLowerCase()) {
-      case "active":
-        return "success";
-      case "sold out":
-        return "warning";
-      case "cancelled":
-        return "danger";
-      default:
-        return "default";
-    }
-  };
+const vendor = await getLoggedInVendorProfile()
 
-  return (
-    <div className="max-w-7xl mx-auto p-6 space-y-4">
-      <div>
-        <h2 className="text-2xl font-bold tracking-tight">
-          Manage Tickets
-        </h2>
+const tickets = await getVendorTickets(vendor._id) || [];
 
-        <p className="text-sm text-default-500">
-          View, update, and manage all tickets you've published on TicketBari.
-        </p>
-      </div>
 
-      <Table aria-label="Vendor tickets table">
-        <Table.ResizableContainer>
-          <Table.Content className="min-w-[1200px]">
-            <Table.Header>
-              <Table.Column
-                isRowHeader
-                id="ticket"
-                defaultWidth="2fr"
-                minWidth={220}
-              >
-                Ticket
-                <Table.ColumnResizer />
-              </Table.Column>
+const getStatusColor = (status) => {
+switch (status?.toLowerCase()) {
+case "active":
+return "success";
+case "sold out":
+return "warning";
+case "cancelled":
+return "danger";
+default:
+return "default";
+}
+};
 
-              <Table.Column
-                id="transport"
-                defaultWidth="1fr"
-                minWidth={120}
-              >
-                Transport
-                <Table.ColumnResizer />
-              </Table.Column>
+return ( <div className="max-w-7xl mx-auto p-6 space-y-4"> <div> <h2 className="text-2xl font-bold tracking-tight">
+Manage Tickets </h2>
 
-              <Table.Column
-                id="route"
-                defaultWidth="2fr"
-                minWidth={200}
-              >
-                Route
-                <Table.ColumnResizer />
-              </Table.Column>
 
-              <Table.Column
-                id="date"
-                defaultWidth="1fr"
-                minWidth={140}
-              >
-                Departure Date
-                <Table.ColumnResizer />
-              </Table.Column>
+    <p className="text-sm text-default-500">
+      View, update, and manage all tickets you've published on TicketBari.
+    </p>
+  </div>
 
-              <Table.Column
-                id="time"
-                defaultWidth="1fr"
-                minWidth={120}
-              >
-                Departure Time
-                <Table.ColumnResizer />
-              </Table.Column>
+  <Table aria-label="Vendor tickets table">
+    <Table.ResizableContainer>
+      <Table.Content className="min-w-[1200px]">
+        <Table.Header>
+          <Table.Column
+            isRowHeader
+            id="ticket"
+            defaultWidth="2fr"
+            minWidth={220}
+          >
+            Ticket
+            <Table.ColumnResizer />
+          </Table.Column>
 
-              <Table.Column
-                id="price"
-                defaultWidth="1fr"
-                minWidth={100}
-              >
-                Price
-                <Table.ColumnResizer />
-              </Table.Column>
+          <Table.Column
+            id="transport"
+            defaultWidth="1fr"
+            minWidth={120}
+          >
+            Transport
+            <Table.ColumnResizer />
+          </Table.Column>
 
-              <Table.Column
-                id="seats"
-                defaultWidth="1fr"
-                minWidth={120}
-              >
-                Available Seats
-                <Table.ColumnResizer />
-              </Table.Column>
+          <Table.Column
+            id="route"
+            defaultWidth="2fr"
+            minWidth={200}
+          >
+            Route
+            <Table.ColumnResizer />
+          </Table.Column>
 
-              <Table.Column
-                id="status"
-                defaultWidth="1fr"
-                minWidth={120}
-              >
-                Status
-                <Table.ColumnResizer />
-              </Table.Column>
+          <Table.Column
+            id="date"
+            defaultWidth="1fr"
+            minWidth={140}
+          >
+            Departure Date
+            <Table.ColumnResizer />
+          </Table.Column>
 
-              <Table.Column
-                id="actions"
-                defaultWidth="1.2fr"
-                minWidth={150}
-              >
-                Actions
-              </Table.Column>
-            </Table.Header>
+          <Table.Column
+            id="time"
+            defaultWidth="1fr"
+            minWidth={120}
+          >
+            Departure Time
+            <Table.ColumnResizer />
+          </Table.Column>
 
-            <Table.Body emptyContent={"No tickets found."}>
-              {tickets.map((ticket) => (
-                <Table.Row key={ticket._id}>
-                  {/* Ticket */}
-                  <Table.Cell>
-                    <div>
-                      <p className="font-medium text-default-800">
-                        {ticket.title}
-                      </p>
+          <Table.Column
+            id="price"
+            defaultWidth="1fr"
+            minWidth={100}
+          >
+            Price
+            <Table.ColumnResizer />
+          </Table.Column>
 
-                      <p className="text-xs text-default-400">
-                        {ticket.vendorName}
-                      </p>
-                    </div>
-                  </Table.Cell>
+          <Table.Column
+            id="seats"
+            defaultWidth="1fr"
+            minWidth={120}
+          >
+            Available Seats
+            <Table.ColumnResizer />
+          </Table.Column>
 
-                  {/* Transport */}
-                  <Table.Cell>
-                    <span className="capitalize">
-                      {ticket.transportType}
-                    </span>
-                  </Table.Cell>
+          <Table.Column
+            id="status"
+            defaultWidth="1fr"
+            minWidth={120}
+          >
+            Status
+            <Table.ColumnResizer />
+          </Table.Column>
 
-                  {/* Route */}
-                  <Table.Cell>
-                    <span>
-                      {ticket.from} → {ticket.to}
-                    </span>
-                  </Table.Cell>
+          <Table.Column
+            id="actions"
+            defaultWidth="1.2fr"
+            minWidth={150}
+          >
+            Actions
+          </Table.Column>
+        </Table.Header>
 
-                  {/* Departure Date */}
-                  <Table.Cell>
-                    {ticket.departureDate}
-                  </Table.Cell>
+        <Table.Body emptyContent={"No tickets found."}>
+          {tickets.map((ticket) => (
+            <Table.Row key={ticket._id}>
+              {/* Ticket */}
+              <Table.Cell>
+                <div>
+                  <p className="font-medium text-default-800">
+                    {ticket.ticketTitle}
+                  </p>
 
-                  {/* Departure Time */}
-                  <Table.Cell>
-                    {ticket.departureTime}
-                  </Table.Cell>
+                  <p className="text-xs text-default-400">
+                    {ticket.vendorName}
+                  </p>
+                </div>
+              </Table.Cell>
 
-                  {/* Price */}
-                  <Table.Cell>
-                    ৳{ticket.price}
-                  </Table.Cell>
+              {/* Transport */}
+              <Table.Cell>
+                <span className="capitalize">
+                  {ticket.transportType}
+                </span>
+              </Table.Cell>
 
-                  {/* Seats */}
-                  <Table.Cell>
-                    {ticket.availableSeats}
-                  </Table.Cell>
+              {/* Route */}
+              <Table.Cell>
+                {ticket.from} → {ticket.to}
+              </Table.Cell>
 
-                  {/* Status */}
-                  <Table.Cell>
-                    <Chip
-                      color={getStatusColor(ticket.status)}
+              {/* Departure Date */}
+              <Table.Cell>
+                {ticket.departureDate}
+              </Table.Cell>
+
+              {/* Departure Time */}
+              <Table.Cell>
+                {ticket.departureTime}
+              </Table.Cell>
+
+              {/* Price */}
+              <Table.Cell>
+                ৳{ticket.price}
+              </Table.Cell>
+
+              {/* Available Seats */}
+              <Table.Cell>
+                {ticket.availableSeats ?? ticket.quantity}
+              </Table.Cell>
+
+              {/* Status */}
+              <Table.Cell>
+                <Chip
+                  color={getStatusColor(ticket.status)}
+                  size="sm"
+                  variant="soft"
+                  className="capitalize"
+                >
+                  {ticket.status}
+                </Chip>
+              </Table.Cell>
+
+              {/* Actions */}
+              <Table.Cell>
+                <div className="flex items-center gap-2">
+                  <Tooltip content="View Ticket">
+                    <Button
+                      isIconOnly
                       size="sm"
-                      variant="soft"
-                      className="capitalize"
+                      variant="light"
                     >
-                      {ticket.status}
-                    </Chip>
-                  </Table.Cell>
+                      <Eye className="w-4 h-4 text-default-400" />
+                    </Button>
+                  </Tooltip>
 
-                  {/* Actions */}
-                  <Table.Cell>
-                    <div className="flex items-center gap-2">
-                      <Tooltip content="View Ticket">
-                        <Button
-                          isIconOnly
-                          size="sm"
-                          variant="light"
-                        >
-                          <Eye className="w-4 h-4 text-default-400" />
-                        </Button>
-                      </Tooltip>
+                  <Tooltip content="Edit Ticket">
+                    <Button
+                      isIconOnly
+                      size="sm"
+                      variant="light"
+                    >
+                      <Edit2 className="w-4 h-4 text-default-400" />
+                    </Button>
+                  </Tooltip>
 
-                      <Tooltip content="Edit Ticket">
-                        <Button
-                          isIconOnly
-                          size="sm"
-                          variant="light"
-                        >
-                          <Edit2 className="w-4 h-4 text-default-400" />
-                        </Button>
-                      </Tooltip>
+                  <Tooltip content="Delete Ticket">
+                    <Button
+                      isIconOnly
+                      size="sm"
+                      variant="light"
+                      color="danger"
+                    >
+                      <Trash2 className="w-4 h-4 text-danger" />
+                    </Button>
+                  </Tooltip>
+                </div>
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table.Content>
+    </Table.ResizableContainer>
+  </Table>
+</div>
 
-                      <Tooltip content="Delete Ticket">
-                        <Button
-                          isIconOnly
-                          size="sm"
-                          variant="light"
-                          color="danger"
-                        >
-                          <Trash2 className="w-4 h-4 text-danger" />
-                        </Button>
-                      </Tooltip>
-                    </div>
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table.Content>
-        </Table.ResizableContainer>
-      </Table>
-    </div>
-  );
+
+);
 };
 
 export default VendorTicketsPage;

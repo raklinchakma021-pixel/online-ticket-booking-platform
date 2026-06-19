@@ -20,9 +20,10 @@ import {
   Pencil,
   Person,
 } from '@gravity-ui/icons';
-
-import { createVendor } from '@/lib/actions/vendors';
-
+import {
+  createVendor,
+  updateVendor,
+} from '@/lib/actions/vendors';
 const textInputClass =
   "w-full bg-zinc-900/50 border border-zinc-800 text-white rounded-lg px-3 py-2.5 outline-none placeholder:text-zinc-600 focus:border-zinc-700 transition";
 
@@ -39,8 +40,8 @@ export default function VendorProfile({ user, vendorProfile }) {
   );
 
   const [isUploading, setIsUploading] = useState(false);
-  console.log("vendorProfile", vendorProfile);
-console.log("vendor", vendor);
+ console.log("user", user);
+console.log("email", user?.email);
   const handleLogoUpload = async (e) => {
     const file = e.target.files[0];
 
@@ -65,16 +66,28 @@ console.log("vendor", vendor);
 
       const data = await res.json();
 
-      if (data.success) {
-        setLogoUrl(data.data.url);
-      }
+   if (data.success) {
+  const uploadedUrl = data.data.url;
+
+  setLogoUrl(uploadedUrl);
+
+  setVendor((prev) => ({
+    ...prev,
+    logo: uploadedUrl,
+  }));
+}
     } catch (error) {
       console.error(error);
     } finally {
       setIsUploading(false);
     }
   };
-
+const handleInputChange = (field, value) => {
+  setVendor((prev) => ({
+    ...prev,
+    [field]: value,
+  }));
+};
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -121,16 +134,32 @@ console.log("vendor", vendor);
       status: vendor?.status || 'Pending',
     };
 
-    const result = await createVendor(vendorData);
+   let result;
 
-    if (result?.insertedId) {
-      toast.success(
-        'Vendor profile saved successfully!'
-      );
+if (vendor?._id) {
+  result = await updateVendor(
+    vendor._id,
+    vendorData
+  );
+} else {
+  result = await createVendor(
+    vendorData
+  );
+}
+    if (result) {
+  toast.success(
+    vendor?._id
+      ? "Profile updated successfully!"
+      : "Profile created successfully!"
+  );
 
-      setVendor(vendorData);
-      setIsEditing(false);
-    }
+  setVendor({
+    ...vendor,
+    ...vendorData,
+  });
+
+  setIsEditing(false);
+}
   };
 
   const startRegistration = () => {
@@ -278,18 +307,30 @@ console.log("vendor", vendor);
 
             <TextField name="vendorName">
               <Label>Vendor Name</Label>
-              <Input
-                defaultValue={vendor?.vendorName}
-                className={textInputClass}
-              />
+             <Input
+  value={vendor?.vendorName || ""}
+  onChange={(e) =>
+    handleInputChange(
+      "vendorName",
+      e.target.value
+    )
+  }
+  className={textInputClass}
+/>
             </TextField>
 
             <TextField name="businessName">
               <Label>Business Name</Label>
-              <Input
-                defaultValue={vendor?.businessName}
-                className={textInputClass}
-              />
+             <Input
+  value={vendor?.businessName || ""}
+  onChange={(e) =>
+    handleInputChange(
+      "businessName",
+      e.target.value
+    )
+  }
+  className={textInputClass}
+/>
             </TextField>
 
           </div>
@@ -297,30 +338,41 @@ console.log("vendor", vendor);
           <div className="grid md:grid-cols-2 gap-6">
 
             <TextField>
-              <Label>Email</Label>
-              <Input
-                value={user?.email}
-                isReadOnly
-                className={textInputClass}
-              />
-            </TextField>
+  <Label>Email</Label>
+  <Input
+    value={user?.email || ""}
+    isReadOnly
+  />
+</TextField>
 
             <TextField name="phone">
               <Label>Phone Number</Label>
-              <Input
-                defaultValue={vendor?.phone}
-                className={textInputClass}
-              />
+             <Input
+  value={vendor?.phone || ""}
+  onChange={(e) =>
+    handleInputChange(
+      "phone",
+      e.target.value
+    )
+  }
+  className={textInputClass}
+/>
             </TextField>
 
           </div>
 
           <TextField name="address">
             <Label>Address</Label>
-            <Input
-              defaultValue={vendor?.address}
-              className={textInputClass}
-            />
+           <Input
+  value={vendor?.address || ""}
+  onChange={(e) =>
+    handleInputChange(
+      "address",
+      e.target.value
+    )
+  }
+  className={textInputClass}
+/>
           </TextField>
 
           <div>
@@ -364,11 +416,17 @@ console.log("vendor", vendor);
           <TextField name="description">
             <Label>About Vendor</Label>
 
-            <TextArea
-              rows={4}
-              defaultValue={vendor?.description}
-              className={textAreaClass}
-            />
+        <TextArea
+  rows={4}
+  value={vendor?.description || ""}
+  onChange={(e) =>
+    handleInputChange(
+      "description",
+      e.target.value
+    )
+  }
+  className={textAreaClass}
+/>
           </TextField>
 
           <div className="flex justify-end pt-6">
