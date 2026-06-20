@@ -27,7 +27,7 @@ export default function Navbar() {
     ? [
         {
           label: "Dashboard",
-          href: "/dashboard",
+          href: "/dashboard/vendor",
         },
       ]
     : []),
