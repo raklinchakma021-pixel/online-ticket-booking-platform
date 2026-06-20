@@ -179,14 +179,14 @@ const Page = async ({ params }) => {
             </div>
           </div>
 
-          <Button
-            as={Link}
-            href={`/tickets/${id}/checkout`}
+          <Link
+          
+            href={`/tickets/${id}/booking`}
             className="w-full mt-8 bg-white text-black"
             endContent={<ArrowRight />}
           >
             Book Now
-          </Button>
+          </Link>
         </aside>
 
       </div>

@@ -5,12 +5,18 @@ import { Card, Button, Link, TextField, Label, InputGroup, Input, FieldError } f
 import { Description, Radio, RadioGroup } from "@heroui/react";
 import { Eye, EyeSlash, Person, At, ShieldKeyhole } from "@gravity-ui/icons";
 import {signIn, signUp } from "@/lib/auth-client";
+import { useRouter, useSearchParams } from "next/navigation";
+
 
 export default function SignupPage() {
     // Form fields
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const router = useRouter();
+
+    const searchParams = useSearchParams();
+        const redirectTo = searchParams.get("redirect") || "/";
    const [role, setRole] = useState("admin");
     // UI States
     const [isVisible, setIsVisible] = useState(false);
@@ -43,7 +49,7 @@ const handleGoogleSignup = async () => {
                 password,
                 name,
                 role,
-                callbackURL: "/",
+                
             });
 
             if (authError) {
@@ -53,6 +59,7 @@ const handleGoogleSignup = async () => {
                 setName("");
                 setEmail("");
                 setPassword("");
+                  router.push(redirectTo);
             }
         } catch (err) {
             setError("An unexpected network error occurred.");
@@ -129,6 +136,14 @@ const handleGoogleSignup = async () => {
                     <div className="flex flex-col gap-4">
                         <Label>Account Role</Label>
                         <RadioGroup defaultValue="admin" name="role" className="flex" onChange = {value => setRole(value)} orientation="horizontal">
+                            <Radio value="user">
+                                <Radio.Control>
+                                    <Radio.Indicator />
+                                </Radio.Control>
+                                <Radio.Content>
+                                    <Label>User</Label>
+                                </Radio.Content>
+                            </Radio>
                             <Radio value="vendor">
                                 <Radio.Control>
                                     <Radio.Indicator />
@@ -208,7 +223,7 @@ const handleGoogleSignup = async () => {
                     {/* Navigation Option */}
                     <div className="text-center pt-4 border-t border-zinc-100 dark:border-zinc-800 mt-2 text-sm text-zinc-600 dark:text-zinc-400">
                         Already have an account?{" "}
-                        <Link href="/auth/signin" className="font-medium cursor-pointer text-sm text-blue-600 dark:text-blue-400">
+                        <Link href={`/auth/signin?redirect=${redirectTo}    `} className="font-medium cursor-pointer text-sm text-blue-600 dark:text-blue-400">
                             Sign in instead
                         </Link>
                     </div>
