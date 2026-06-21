@@ -83,15 +83,21 @@ const MyBookingPage = async () => {
                 </h2>
               </div>
 
-              <Button
-                as="a"
-                href="/payment"
-                color="primary"
-                size="lg"
-                className="min-w-[220px]"
-              >
-                Proceed To Payment
-              </Button>
+<form action="/api/checkout_sessions" method="POST">
+  <input
+    type="hidden"
+    name="amount"
+    value={totalBookingAmount}
+  />
+
+  <button
+    type="submit"
+    className="min-w-[220px]"
+  >
+    Checkout
+  </button>
+</form>
+            
             </div>
           </div>
 
