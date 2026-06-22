@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from "next/cache";
 import { serverMutation } from "../core/server";
 
 export const createVendor = async (newVendorData) => {
@@ -9,9 +10,12 @@ export const updateVendor = async (
     vendorId,
     updatedVendorData
 ) => {
-    return serverMutation(
+    const result = serverMutation(
         `/api/vendors/${vendorId}`,
         updatedVendorData,
-        "PUT"
+        "PATCH"
     );
+    revalidatePath('/dashboard/admin/vendors')
+
+    return result
 };

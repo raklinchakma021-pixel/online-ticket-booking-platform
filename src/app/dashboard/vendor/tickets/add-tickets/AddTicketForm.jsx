@@ -168,10 +168,11 @@ const uploadToImgBB = async (file) => {
             Vendor:{" "}
             <span className="text-white">{vendor.name}</span> (
             {vendor.email})
+             <span className="text-white">{vendor.status}</span> 
           </div>
         </div>
-
-        <Form
+{vendor.status !== 'Approved' && <div>Please wait to get approval</div>}
+        { vendor.status === 'Approved' && <Form
           onSubmit={handleSubmit}
           validationErrors={errors}
           className="space-y-8"
@@ -281,6 +282,7 @@ const uploadToImgBB = async (file) => {
             </Button>
           </div>
         </Form>
+        }
       </div>
     </div>
   );
