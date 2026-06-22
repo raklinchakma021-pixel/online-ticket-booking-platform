@@ -5,13 +5,14 @@ import { getUserSession } from "@/lib/core/session";
 
 export async function POST(req) {
   try {
-   const formData = await req.formData();
+    const formData = await req.formData();
 
-const amount = Number(
-  formData.get("amount")
-);
-const user = await getUserSession()
-console.log("Amount:", amount);
+    const amount = Number(
+      formData.get("amount")
+    );
+
+    const user = await getUserSession();
+
     const headersList = await headers();
     const origin =
       headersList.get("origin");
@@ -19,7 +20,13 @@ console.log("Amount:", amount);
     const session =
       await stripe.checkout.sessions.create({
         mode: "payment",
-  customer_email: user?.email,
+
+        customer_email: user?.email,
+
+        metadata: {
+          userId: user?.id,
+        },
+
         line_items: [
           {
             price_data: {
@@ -31,7 +38,7 @@ console.log("Amount:", amount);
               },
 
               unit_amount:
-                amount * 100, // Stripe uses smallest currency unit
+                amount * 100,
             },
 
             quantity: 1,

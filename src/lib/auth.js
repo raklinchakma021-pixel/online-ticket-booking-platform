@@ -31,8 +31,11 @@ export const auth = betterAuth({
    user: {
        additionalFields: {
           role: {
-              default: "admin"
-            } 
+              default: "user"
+            } ,
+            status: {
+              default: 'paid'
+            }
         }
     }
 });

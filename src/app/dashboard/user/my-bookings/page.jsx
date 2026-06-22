@@ -2,8 +2,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
 import { Button } from "@heroui/react";
-import { BookingCancelAlert } from "../tickets/[id]/booking/BookingCancelAlert";
-
+import { BookingCancelAlert } from "@/app/tickets/[id]/booking/BookingCancelAlert"; 
 const MyBookingPage = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -36,11 +35,15 @@ const MyBookingPage = async () => {
 
   const bookings = await res.json();
 
-  const totalBookingAmount = bookings.reduce(
-    (sum, booking) =>
-      sum + Number(booking.totalPrice || 0),
-    0
-  );
+  const unpaidBookings = bookings.filter(
+  (booking) => booking.paymentStatus !== "Paid"
+);
+
+const totalBookingAmount = unpaidBookings.reduce(
+  (sum, booking) =>
+    sum + Number(booking.totalPrice || 0),
+  0
+);
 
   return (
     <div className="max-w-7xl mx-auto p-6">
@@ -63,40 +66,51 @@ const MyBookingPage = async () => {
           {/* Summary Card */}
           <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 mb-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-              <div>
-                <p className="text-zinc-500 text-sm">
-                  Total Bookings
-                </p>
+             <div>
+  <p className="text-zinc-500 text-sm">
+    Unpaid Bookings
+  </p>
 
-                <h2 className="text-3xl font-bold mt-1">
-                  {bookings.length}
-                </h2>
-              </div>
+  <h2 className="text-3xl font-bold mt-1">
+    {unpaidBookings.length}
+  </h2>
+</div>
 
-              <div>
-                <p className="text-zinc-500 text-sm">
-                  Total Amount
-                </p>
+<div>
+  <p className="text-zinc-500 text-sm">
+    Amount Due
+  </p>
 
-                <h2 className="text-4xl font-bold text-green-400 mt-1">
-                  ৳{totalBookingAmount}
-                </h2>
-              </div>
+  <h2 className="text-4xl font-bold text-yellow-400 mt-1">
+    ৳{totalBookingAmount}
+  </h2>
+</div>
 
-<form action="/api/checkout_sessions" method="POST">
-  <input
-    type="hidden"
-    name="amount"
-    value={totalBookingAmount}
-  />
-
-  <button
-    type="submit"
-    className="min-w-[220px]"
+{unpaidBookings.length > 0 && (
+  <form
+    action="/api/checkout_sessions"
+    method="POST"
   >
-    Checkout
-  </button>
-</form>
+    <input
+      type="hidden"
+      name="amount"
+      value={totalBookingAmount}
+    />
+
+    <input
+      type="hidden"
+      name="userId"
+      value={user.id}
+    />
+
+    <button
+      type="submit"
+      className="min-w-[220px] px-6 py-3 rounded-xl bg-green-500 text-white font-semibold hover:bg-green-600 transition"
+    >
+      Pay ৳{totalBookingAmount}
+    </button>
+  </form>
+)}
             
             </div>
           </div>

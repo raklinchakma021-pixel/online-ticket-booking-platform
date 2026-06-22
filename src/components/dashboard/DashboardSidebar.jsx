@@ -1,3 +1,4 @@
+import { getUserSession } from "@/lib/core/session";
 import {
   LayoutSideContentLeft,
   House,
@@ -5,12 +6,18 @@ import {
   Ticket,
   Plus,
   CircleInfo,
+   
+  
+  Megaphone,
+  CircleDollar,
+  
 } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
 import Link from "next/link";
 
-export function DashboardSidebar() {
-  const navItems = [
+export async function DashboardSidebar() {
+   const user = await getUserSession();
+  const vendorNavLinks = [
     {
       icon: House,
       href: "/dashboard/vendor",
@@ -38,6 +45,75 @@ export function DashboardSidebar() {
     },
   ];
 
+
+const userNavLinks = [
+  {
+    icon: House,
+    href: "/dashboard/user",
+    label: "Dashboard",
+  },
+  {
+    icon: Ticket,
+    href: "/tickets",
+    label: "Browse Tickets",
+  },
+  {
+    icon: CircleInfo,
+    href: "/dashboard/user/my-bookings",
+    label: "My Bookings",
+  },
+  {
+    icon: CircleDollar,
+    href: "/dashboard/user/payment-history",
+    label: "Payment History",
+  },
+  {
+    icon: Person,
+    href: "/dashboard/user/profile",
+    label: "Profile",
+  },
+];
+
+
+const adminNavLinks = [
+  {
+    icon: House,
+    href: "/dashboard/admin",
+    label: "Dashboard",
+  },
+  {
+    icon: Person,
+    href: "/dashboard/admin/users",
+    label: "Manage Users",
+  },
+  {
+    icon: Ticket,
+    href: "/dashboard/admin/tickets",
+    label: "Manage Tickets",
+  },
+  {
+    icon: Person,
+    href: "/dashboard/admin/vendors",
+    label: "Manage Vendors",
+  },
+  {
+    icon: Megaphone,
+    href: "/dashboard/admin/advertisements",
+    label: "Advertisements",
+  },
+  {
+    icon: CircleInfo,
+    href: "/dashboard/admin/bookings",
+    label: "All Bookings",
+  },
+];
+ const navLinksMap = {
+        user: userNavLinks,
+        vendor: vendorNavLinks,
+        admin: adminNavLinks
+    }
+
+    const navItems = navLinksMap[user?.role || 'user'];
   const navContent = (
     <nav className="flex flex-col gap-1">
       {navItems.map((item) => (
@@ -59,9 +135,13 @@ export function DashboardSidebar() {
       <aside className="hidden w-64 shrink-0 border-r border-default p-4 lg:block">
         <div className="mb-6">
           <h2 className="text-xl font-bold">🎫 TicketBari</h2>
-          <p className="text-sm text-default-500">
-            Vendor Dashboard
-          </p>
+        <p className="text-sm text-default-500">
+  {user?.role === "admin"
+    ? "Admin Dashboard"
+    : user?.role === "vendor"
+    ? "Vendor Dashboard"
+    : "User Dashboard"}
+</p>
         </div>
 
         {navContent}

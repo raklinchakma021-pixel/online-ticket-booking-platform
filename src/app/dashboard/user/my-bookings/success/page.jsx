@@ -19,17 +19,33 @@ export default async function Success({
     );
   }
 
-  const {
-    status,
-    amount_total,
-    customer_details,
-  } = await stripe.checkout.sessions.retrieve(
+const stripeSession =
+  await stripe.checkout.sessions.retrieve(
     session_id
   );
 
-  if (status === "open") {
-    redirect("/");
-  }
+const {
+  status,
+  amount_total,
+  customer_details,
+} = stripeSession;
+
+if (status === "complete") {
+  await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/bookings/payment-success`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email:
+          customer_details?.email,
+      }),
+      cache: "no-store",
+    }
+  );
+}
 
   if (status === "complete") {
     return (

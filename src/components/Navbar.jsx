@@ -23,15 +23,22 @@ export default function Navbar() {
     label: "All Tickets",
     href: "/tickets",
   },
-  ...(user
-    ? [
-        {
-          label: "Dashboard",
-          href: "/dashboard/vendor",
-        },
-      ]
-    : []),
+  
 ];
+const dashboardLinks = {
+    user: '/dashboard/user',
+    vendor: '/dashboard/vendor',
+    admin: '/dashboard/admin'
+  }
+
+  if (user?.email) {
+    navLinks.push(
+      {
+        label: 'Dashboard',
+        href: dashboardLinks[user?.role || 'user']
+      }
+    )
+  }
 
   return (
     <nav className="sticky top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur-xl">
