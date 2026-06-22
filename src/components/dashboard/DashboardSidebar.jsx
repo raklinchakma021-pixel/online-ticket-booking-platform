@@ -13,6 +13,7 @@ import {
   
 } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
+import { CodeSquare } from "lucide-react";
 import Link from "next/link";
 
 export async function DashboardSidebar() {
@@ -40,8 +41,13 @@ export async function DashboardSidebar() {
     },
     {
       icon: CircleInfo,
-      href: "/dashboard/vendor/bookings",
-      label: "Ticket Bookings",
+      href: "/dashboard/vendor/manage-bookings",
+      label: "Requested Bookings",
+    },
+    {
+      icon: CodeSquare,
+      href: "/dashboard/vendor/revenue",
+      label: "Revenue Overview",
     },
   ];
 

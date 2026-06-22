@@ -45,9 +45,9 @@ export async function POST(req) {
           },
         ],
 
-        success_url: `${origin}/my-bookings/success?session_id={CHECKOUT_SESSION_ID}`,
+        success_url: `${origin}/dashboard/user/my-bookings/success?session_id={CHECKOUT_SESSION_ID}`,
 
-        cancel_url: `${origin}/my-bookings`,
+        cancel_url: `${origin}/dashboard/user/my-bookings`,
       });
 
     return NextResponse.redirect(
