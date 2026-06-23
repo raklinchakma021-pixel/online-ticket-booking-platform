@@ -94,7 +94,7 @@ const adminNavLinks = [
   },
   {
     icon: Ticket,
-    href: "/dashboard/admin/tickets",
+    href: "/dashboard/admin/manage-tickets",
     label: "Manage Tickets",
   },
   {
