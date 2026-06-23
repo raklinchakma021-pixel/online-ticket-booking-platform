@@ -89,7 +89,7 @@ const adminNavLinks = [
   },
   {
     icon: Person,
-    href: "/dashboard/admin/users",
+    href: "/dashboard/admin/manage-users",
     label: "Manage Users",
   },
   {
