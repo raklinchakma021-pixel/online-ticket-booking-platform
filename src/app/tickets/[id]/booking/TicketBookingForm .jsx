@@ -63,6 +63,8 @@ const TicketBookingForm = ({
 
       vendorName:
         ticket.vendorName,
+      vendorEmail:
+        ticket.vendorEmail,
 
       userId: user.id,
       userEmail: user.email,

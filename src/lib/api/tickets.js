@@ -16,10 +16,16 @@ export const getTickets = async () => {
 export const getTicketById = async (ticketId) => {
     return serverFetch(`/api/tickets/${ticketId}`);
 }
-export const getVendorTickets = async (vendorId, status = 'active') => {
-    const res = await fetch(`${baseUrl}/api/tickets?vendorId=${vendorId}&status=${status}`);
-    return res.json();
-}
+export const getVendorTickets = async (vendorId) => {
+  const res = await fetch(
+    `${baseUrl}/api/tickets?vendorId=${vendorId}`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  return res.json();
+};
 
 export const approveTicket = async (id) => {
   const res = await fetch(
