@@ -27,3 +27,4 @@ export const getLoggedInUser = async () => {
 
     return getUser(user.id);
 };
+

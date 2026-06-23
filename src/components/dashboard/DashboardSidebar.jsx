@@ -10,6 +10,8 @@ import {
   
   Megaphone,
   CircleDollar,
+  PersonFill,
+  Persons,
   
 } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
@@ -88,7 +90,12 @@ const adminNavLinks = [
     label: "Dashboard",
   },
   {
-    icon: Person,
+    icon: PersonFill,
+    href: "/dashboard/admin/profile",
+    label: "My Profile",
+  },
+  {
+    icon: Persons,
     href: "/dashboard/admin/manage-users",
     label: "Manage Users",
   },
@@ -107,11 +114,7 @@ const adminNavLinks = [
     href: "/dashboard/admin/advertisements",
     label: "Advertisements",
   },
-  {
-    icon: CircleInfo,
-    href: "/dashboard/admin/bookings",
-    label: "All Bookings",
-  },
+ 
 ];
  const navLinksMap = {
         user: userNavLinks,
