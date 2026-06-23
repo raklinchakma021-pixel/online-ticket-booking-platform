@@ -42,3 +42,6 @@ export const rejectTicket = async (id) => {
 
   return res.json();
 };
+export const getAdvertisedTickets = async () => {
+  return serverFetch("/api/tickets/advertised");
+};
