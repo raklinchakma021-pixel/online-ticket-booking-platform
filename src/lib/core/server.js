@@ -1,10 +1,20 @@
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-export const serverFetch = async (path) => {
-    const res = await fetch(`${baseUrl}${path}`);
+// export const serverFetch = async (path) => {
+//     const res = await fetch(`${baseUrl}${path}`);
+//     return res.json();
+// };
+export const serverFetch = async (
+    path,
+    options = {}
+) => {
+    const res = await fetch(
+        `${baseUrl}${path}`,
+        options
+    );
+
     return res.json();
 };
-
 export const serverMutation = async (
     path,
     data,

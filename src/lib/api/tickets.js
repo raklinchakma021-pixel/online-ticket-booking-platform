@@ -13,9 +13,21 @@ export const getTickets = async () => {
     return res.json();
 };
 
-export const getTicketById = async (ticketId) => {
-    return serverFetch(`/api/tickets/${ticketId}`);
-}
+// export const getTicketById = async (ticketId) => {
+//     return serverFetch(`/api/tickets/${ticketId}`);
+// }
+
+export const getTicketById = async (ticketId, token) => {
+    return serverFetch(
+        `/api/tickets/${ticketId}`,
+        {
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+            cache: "no-store",
+        }
+    );
+};
 export const getVendorTickets = async (vendorId) => {
   const res = await fetch(
     `${baseUrl}/api/tickets?vendorId=${vendorId}`,
