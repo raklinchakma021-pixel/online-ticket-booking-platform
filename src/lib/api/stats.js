@@ -10,3 +10,6 @@ export const getVendorStats = async (
     `/api/vendor/stats/${email}`
   );
 };
+export const getUserStats = async (userId) => {
+  return serverFetch(`/api/user/stats/${userId}`);
+};

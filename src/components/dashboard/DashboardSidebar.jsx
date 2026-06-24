@@ -60,11 +60,7 @@ const userNavLinks = [
     href: "/dashboard/user",
     label: "Dashboard",
   },
-  {
-    icon: Ticket,
-    href: "/tickets",
-    label: "Browse Tickets",
-  },
+
   {
     icon: CircleInfo,
     href: "/dashboard/user/my-bookings",
@@ -72,7 +68,7 @@ const userNavLinks = [
   },
   {
     icon: CircleDollar,
-    href: "/dashboard/user/payment-history",
+    href: "/dashboard/user/transactions",
     label: "Payment History",
   },
   {

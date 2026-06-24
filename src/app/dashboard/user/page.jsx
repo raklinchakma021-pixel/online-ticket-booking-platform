@@ -1,7 +1,12 @@
 "use client";
 
-import React from "react";
+import React, {
+  useEffect,
+  useState
+} from "react";
+
 import { useSession } from "@/lib/auth-client";
+
 import {
   Ticket,
   CreditCard,
@@ -10,11 +15,31 @@ import {
 } from "@gravity-ui/icons";
 
 import { DashboardStats } from "@/components/dashboard/DashboardStats";
+import { getUserStats } from "@/lib/api/stats";
 
 const UserDashboardHomePage = () => {
-  const { data: session, isPending } = useSession();
+  const { data: session, isPending } =
+    useSession();
 
-  if (isPending) {
+  const [stats, setStats] =
+    useState(null);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      if (!session?.user?.id) return;
+
+      const data =
+        await getUserStats(
+          session.user.id
+        );
+
+      setStats(data);
+    };
+
+    fetchStats();
+  }, [session]);
+
+  if (isPending || !stats) {
     return (
       <div className="flex items-center justify-center py-20">
         Loading...
@@ -25,22 +50,22 @@ const UserDashboardHomePage = () => {
   const userStats = [
     {
       title: "My Bookings",
-      value: "0",
+      value: stats.myBookings,
       icon: Ticket,
     },
     {
       title: "Pending Payments",
-      value: "0",
+      value: stats.pendingPayments,
       icon: CreditCard,
     },
     {
       title: "Booked Trips",
-      value: "0",
+      value: stats.bookedTrips,
       icon: Person,
     },
     {
       title: "Available Tickets",
-      value: "100+",
+      value: stats.availableTickets,
       icon: Magnifier,
     },
   ];
@@ -49,7 +74,6 @@ const UserDashboardHomePage = () => {
 
   return (
     <div className="space-y-8">
-      {/* Welcome Section */}
       <div className="p-6">
         <h1 className="text-3xl md:text-4xl font-bold">
           Welcome back, {user?.name}
@@ -62,48 +86,9 @@ const UserDashboardHomePage = () => {
         </p>
       </div>
 
-      {/* Stats */}
       <DashboardStats statsData={userStats} />
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="rounded-2xl border p-6">
-          <h3 className="text-xl font-semibold mb-2">
-            My Bookings
-          </h3>
-
-          <p className="text-default-500">
-            View all your booked tickets, check
-            booking status, and manage upcoming
-            journeys.
-          </p>
-        </div>
-
-        <div className="rounded-2xl border p-6">
-          <h3 className="text-xl font-semibold mb-2">
-            Discover Tickets
-          </h3>
-
-          <p className="text-default-500">
-            Explore available buses, trains,
-            flights, and launches across
-            Bangladesh and book instantly.
-          </p>
-        </div>
-      </div>
-
-      {/* Travel Tips */}
-      <div className="rounded-2xl border p-6">
-        <h3 className="text-xl font-semibold mb-2">
-          Travel Reminder
-        </h3>
-
-        <p className="text-default-500">
-          Arrive at your departure point at least
-          30 minutes before departure time and
-          keep your booking confirmation ready.
-        </p>
-      </div>
+      {/* rest of your UI */}
     </div>
   );
 };
