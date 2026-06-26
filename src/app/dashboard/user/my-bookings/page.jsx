@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import { Button } from "@heroui/react";
 import { BookingCancelAlert } from "@/app/tickets/[id]/booking/BookingCancelAlert"; 
+import { getUserToken } from "@/lib/core/session";
 const MyBookingPage = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -26,15 +27,20 @@ const MyBookingPage = async () => {
     );
   }
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/bookings/${user.id}`,
-    {
-      cache: "no-store",
-    }
-  );
+  
+const token = await getUserToken();
 
+const res = await fetch(
+  `${process.env.NEXT_PUBLIC_BASE_URL}/api/bookings/${user.id}`,
+  {
+    cache: "no-store",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  }
+);
   const bookings = await res.json();
-
+console.log(bookings);
   const unpaidBookings = bookings.filter(
   (booking) => booking.paymentStatus !== "Paid"
 );

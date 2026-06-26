@@ -8,6 +8,7 @@ import WhyChooseUsSection from "@/components/home/WhyChooseSection";
 
 export default async function Home() {
    const tickets = await getTickets();
+   console.log(tickets)
   return (
    <>
    <HeroBanner/>

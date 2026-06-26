@@ -13,12 +13,14 @@ export default function TicketFilters({
   selectedLocation,
 setSelectedLocation,
 availableOnly,
-setAvailableOnly
+setAvailableOnly,
+sortByPrice,
+setSortByPrice,
 }) {
   return (
     <div className="max-w-7xl mx-auto mb-10 bg-zinc-900/50 border border-zinc-800 rounded-3xl p-6">
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
 
         {/* Search */}
         <div>
@@ -110,6 +112,32 @@ setAvailableOnly
             </span>
           </label>
         </div>
+
+        <div>
+  <label className="block text-sm text-zinc-400 mb-2">
+    Sort By Price
+  </label>
+
+  <select
+    value={sortByPrice}
+    onChange={(e) =>
+      setSortByPrice(e.target.value)
+    }
+    className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-white outline-none"
+  >
+    <option value="default">
+      Default
+    </option>
+
+    <option value="low-high">
+      Low to High
+    </option>
+
+    <option value="high-low">
+      High to Low
+    </option>
+  </select>
+</div>
 
       </div>
     </div>

@@ -2,7 +2,7 @@
 
 import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
-import { approveTicket, rejectTicket } from "@/lib/api/tickets";
+import { approveTicket, rejectTicket } from "@/lib/api/tickets.client";
 
 export default function TicketActions({ ticketId }) {
   const router = useRouter();

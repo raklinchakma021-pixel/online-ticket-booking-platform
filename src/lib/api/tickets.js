@@ -1,9 +1,10 @@
+
+// import { protectedFetch, serverFetch } from "../core/server";
+
 import { serverFetch } from "../core/server";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-export const getAllTickets = async () =>{
-    return serverFetch('/api/tickets');
-}
+
 export const getTickets = async () => {
     const res = await fetch(
         `${baseUrl}/api/tickets?status=approved`,
@@ -13,21 +14,18 @@ export const getTickets = async () => {
     return res.json();
 };
 
-// export const getTicketById = async (ticketId) => {
-//     return serverFetch(`/api/tickets/${ticketId}`);
-// }
 
-export const getTicketById = async (ticketId, token) => {
-    return serverFetch(
-        `/api/tickets/${ticketId}`,
-        {
-            headers: {
-                authorization: `Bearer ${token}`,
-            },
-            cache: "no-store",
-        }
-    );
-};
+// export const getTicketById = async (ticketId, token) => {
+//     return serverFetch(
+//         `/api/tickets/${ticketId}`,
+//         {
+//             headers: {
+//                 authorization: `Bearer ${token}`,
+//             },
+//             cache: "no-store",
+//         }
+//     );
+// };
 export const getVendorTickets = async (vendorId) => {
   const res = await fetch(
     `${baseUrl}/api/tickets?vendorId=${vendorId}`,
@@ -39,27 +37,27 @@ export const getVendorTickets = async (vendorId) => {
   return res.json();
 };
 
-export const approveTicket = async (id) => {
-  const res = await fetch(
-    `${baseUrl}/tickets/${id}/approve`,
-    {
-      method: "PATCH",
-    }
-  );
+// export const approveTicket = async (id) => {
+//   const res = await fetch(
+//     `${baseUrl}/tickets/${id}/approve`,
+//     {
+//       method: "PATCH",
+//     }
+//   );
 
-  return res.json();
-};
+//   return res.json();
+// };
 
-export const rejectTicket = async (id) => {
-  const res = await fetch(
-    `${baseUrl}/tickets/${id}/reject`,
-    {
-      method: "PATCH",
-    }
-  );
+// export const rejectTicket = async (id) => {
+//   const res = await fetch(
+//     `${baseUrl}/tickets/${id}/reject`,
+//     {
+//       method: "PATCH",
+//     }
+//   );
 
-  return res.json();
-};
+//   return res.json();
+// };
 export const getAdvertisedTickets = async () => {
   return serverFetch("/api/tickets/advertised");
 };

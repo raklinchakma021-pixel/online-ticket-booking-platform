@@ -5,6 +5,7 @@ import { Card, Button, Link, TextField, Label, InputGroup, Input } from "@heroui
 import { Eye, EyeSlash, At, ShieldKeyhole } from "@gravity-ui/icons";
 import { signIn } from "@/lib/auth-client";
 import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function SigninPage() {
     // Form fields
@@ -46,10 +47,12 @@ const handleGoogleSignin = async () => {
 
             if (authError) {
                 setError(authError.message || "Invalid email or password.");
+                  toast.error(authError.message || "Invalid email or password.");
             } else {
                 setSuccess("Signed in successfully! Redirecting...");
                 setEmail("");
                 setPassword("");
+                toast.success("Signed in successfully! Redirecting...");
                 router.push(redirectTo);
             }
         } catch (err) {

@@ -1,5 +1,5 @@
 import React from "react";
-import { getTicketById } from "@/lib/api/tickets";
+import { getTicketById } from "@/lib/api/tickets.server";
 import { Button, Link } from "@heroui/react";
 import {
   MapPin,
@@ -7,20 +7,13 @@ import {
   CircleDollar,
   ArrowRight,
 } from "@gravity-ui/icons";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+
 
 const Page = async ({ params }) => {
   const { id } = await params;
-// const {token} = await auth.api.getToken({
-//     headers: await headers()
-//   })
-//   const ticket = await getTicketById(id);
-const { token } = await auth.api.getToken({
-  headers: await headers()
-});
 
-const ticket = await getTicketById(id, token);
+
+const ticket = await getTicketById(id);
 
   if (!ticket) {
     return (

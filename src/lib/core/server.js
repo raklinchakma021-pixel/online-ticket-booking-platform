@@ -1,20 +1,36 @@
+import { getUserToken } from "./session";
+
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-// export const serverFetch = async (path) => {
-//     const res = await fetch(`${baseUrl}${path}`);
-//     return res.json();
-// };
+export const authHeader = async () => {
+    const token = await getUserToken();
+    const header = token ? {
+        authorization: `Bearer ${token}`
+    } : {};
+    return header;
+}
 export const serverFetch = async (
-    path,
-    options = {}
+    path
+    
 ) => {
     const res = await fetch(
-        `${baseUrl}${path}`,
-        options
+        `${baseUrl}${path}`
+      
     );
 
     return res.json();
 };
+export const protectedFetch = async (path) => {
+    const res = await fetch(`${baseUrl}${path}`,
+        {
+            headers: await authHeader()
+        }
+    );
+
+    // handle 401, 403
+
+    return handleStatusCode(res);
+}
 export const serverMutation = async (
     path,
     data,
@@ -24,9 +40,23 @@ export const serverMutation = async (
         method,
         headers: {
             "Content-Type": "application/json",
+            ... await authHeader()
         },
         body: JSON.stringify(data),
     });
+ console.log('status code ' , res.status);
+    return handleStatusCode(res);
+}
 
-    return res.json();
-};
+
+// handle 401, 404, 403
+const handleStatusCode = res => {
+    if (res.status === 401) {
+        redirect('/unauthorized')
+    }
+    else if (res.status === 403) {
+        redirect('/forbidden');
+    }
+
+    return res.json()
+}

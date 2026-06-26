@@ -1,9 +1,9 @@
-import { serverFetch } from "../core/server";
+import { protectedFetch, serverFetch } from "../core/server";
 import { getUserSession } from "../core/session";
 
 
 export const getVendors = async () => {
-    return serverFetch(`/api/vendors`);
+    return protectedFetch(`/api/vendors`);
 }
 /**
  * Get vendor profile by vendorId

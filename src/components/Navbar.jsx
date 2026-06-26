@@ -4,15 +4,26 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@heroui/react";
 import { useSession, signOut } from "@/lib/auth-client";
-
+import { useTheme } from "next-themes";
+import { useEffect } from "react";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session, isPending } = useSession();
   const user = session?.user;
 
+console.log("SESSION:", session);
   const handleSignOut = async () => {
     await signOut();
   };
+  const { theme, setTheme } = useTheme();
+const [mounted, setMounted] =
+  useState(false);
+
+useEffect(() => {
+  setMounted(true);
+}, []);
+
+if (!mounted) return null;
 
  const navLinks = [
   {
@@ -41,7 +52,16 @@ const dashboardLinks = {
   }
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur-xl">
+    <nav className="
+rounded-lg
+border
+border-zinc-300
+px-3
+py-2
+text-black
+dark:border-white/20
+dark:text-white
+">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         
         {/* LOGO */}
@@ -57,6 +77,7 @@ const dashboardLinks = {
 
         {/* RIGHT SIDE */}
         <div className="flex items-center gap-4">
+          
           {/* DESKTOP MENU */}
           <div className="hidden items-center gap-6 md:flex">
             {/* NAV LINKS */}
@@ -75,7 +96,20 @@ const dashboardLinks = {
 
             {/* DIVIDER */}
             <div className="h-6 w-px bg-white/20" />
-
+<button
+  onClick={() =>
+    setTheme(
+      theme === "dark"
+        ? "light"
+        : "dark"
+    )
+  }
+  className="rounded-lg border border-white/20 px-3 py-2 text-white"
+>
+  {theme === "dark"
+    ? "☀️"
+    : "🌙"}
+</button>
             {/* AUTH */}
             <div className="flex items-center gap-4">
               {isPending ? null : user ? (
@@ -110,7 +144,20 @@ const dashboardLinks = {
               )}
             </div>
           </div>
-
+<button
+  onClick={() =>
+    setTheme(
+      theme === "dark"
+        ? "light"
+        : "dark"
+    )
+  }
+  className="w-full rounded-xl border border-white/20 px-4 py-3 text-white"
+>
+  {theme === "dark"
+    ? "☀️ Light Mode"
+    : "🌙 Dark Mode"}
+</button>
           {/* MOBILE MENU BUTTON */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}

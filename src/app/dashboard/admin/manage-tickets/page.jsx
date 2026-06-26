@@ -9,7 +9,7 @@ import {
 
   getAllTickets,
 
-} from "@/lib/api/tickets";
+} from "@/lib/api/tickets.server";
 import TicketActions from "@/components/admin/TicketActions";
 const ManageTicketsPage = async () => {
 const tickets = await getAllTickets() || [];

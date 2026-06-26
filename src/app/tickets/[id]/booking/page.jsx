@@ -1,4 +1,4 @@
-import { getTicketById } from "@/lib/api/tickets";
+import { getTicketById } from "@/lib/api/tickets.server";
 import { getUserSession } from "@/lib/core/session";
 import { redirect } from "next/navigation";
 import Link from "next/link";
