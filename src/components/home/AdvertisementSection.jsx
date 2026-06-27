@@ -10,7 +10,7 @@ const AdvertisementSection = async () => {
 
       {/* Section Title */}
       <div>
-        <h2 className="text-2xl font-bold text-white">
+        <h2 className="text-4xl font-bold text-black dark:text-white">
           Advertisement Tickets
         </h2>
 

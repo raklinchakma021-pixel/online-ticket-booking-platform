@@ -17,6 +17,8 @@ import {
 
 import { createBooking } from "@/lib/actions/bookings";
 import { Phone } from "lucide-react";
+import { toast } from "react-toastify";
+import { redirect } from "next/navigation";
 
 const TicketBookingForm = ({
   ticket,
@@ -94,7 +96,7 @@ const TicketBookingForm = ({
       );
 
     if (result?.insertedId) {
-      alert(
+      toast.success(
         "Booking created successfully!"
       );
 
@@ -104,6 +106,7 @@ const TicketBookingForm = ({
         phone: "",
         quantity: 1,
       });
+      redirect("/dashboard/user/my-bookings")
     }
   };
 
@@ -129,7 +132,7 @@ const TicketBookingForm = ({
           isRequired
           name="passengerName"
         >
-          <Label>
+        <Label className="!text-white dark:!text-black">
             Passenger Name
           </Label>
 
@@ -151,7 +154,7 @@ const TicketBookingForm = ({
           isRequired
           name="phone"
         >
-          <Label>
+          <Label className="!text-white dark:!text-black">
             Phone Number
           </Label>
 
@@ -173,7 +176,7 @@ const TicketBookingForm = ({
           isRequired
           name="quantity"
         >
-          <Label>
+       <Label className="!text-white dark:!text-black">
             Number of Tickets
           </Label>
 
@@ -218,7 +221,7 @@ const TicketBookingForm = ({
             <ArrowRight />
           }
         >
-          Continue To Payment
+          Confirm Booking
         </Button>
 
       </Form>

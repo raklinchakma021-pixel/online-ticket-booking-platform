@@ -70,9 +70,9 @@ dark:text-white
             <span className="text-xl font-bold text-white">🎫</span>
           </div>
 
-          <h1 className="hidden text-lg font-bold text-white sm:block">
-            TicketBari
-          </h1>
+         <h1 className=" text-lg font-bold !text-black dark:!text-white sm:block">
+  NextTrip
+</h1>
         </Link>
 
         {/* RIGHT SIDE */}
@@ -86,7 +86,7 @@ dark:text-white
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="rounded-full px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-white/10 hover:text-white"
+                  className="rounded-full px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 transition hover:bg-gray-200 dark:hover:bg-white/10 hover:text-black dark:hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -104,8 +104,8 @@ dark:text-white
         : "dark"
     )
   }
-  className="rounded-lg border border-white/20 px-3 py-2 text-white"
->
+
+className="rounded-lg border border-gray-300 dark:border-white/20 px-3 py-2 text-black dark:text-white">
   {theme === "dark"
     ? "☀️"
     : "🌙"}
@@ -114,7 +114,7 @@ dark:text-white
             <div className="flex items-center gap-4">
               {isPending ? null : user ? (
                 <>
-                  <span className="text-sm text-gray-300">
+                 <span className="text-sm text-gray-700 dark:text-gray-300">
                     Hi, <span className="font-semibold">{user.name}</span>
                   </span>
                   <Button
@@ -152,7 +152,7 @@ dark:text-white
         : "dark"
     )
   }
-  className="w-full rounded-xl border border-white/20 px-4 py-3 text-white"
+ className="w-full rounded-xl border border-white/20 px-4 py-3 !text-black dark:!text-white"
 >
   {theme === "dark"
     ? "☀️ Light Mode"
@@ -161,7 +161,7 @@ dark:text-white
           {/* MOBILE MENU BUTTON */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="rounded-lg p-2 text-white transition hover:bg-white/10 md:hidden"
+           className="rounded-lg p-2 text-black dark:text-white transition hover:bg-gray-200 dark:hover:bg-white/10 md:hidden"
             aria-label="Toggle Menu"
           >
             {isMenuOpen ? "✕" : "☰"}
@@ -171,14 +171,14 @@ dark:text-white
 
       {/* MOBILE MENU */}
       {isMenuOpen && (
-        <div className="border-t border-white/10 bg-black md:hidden">
+<div className="border-t border-gray-200 dark:border-white/10 bg-white dark:bg-black md:hidden">
           <div className="space-y-4 px-4 py-6">
             <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="block rounded-xl px-4 py-3 text-base font-medium text-gray-300 transition hover:bg-white/5 hover:text-white"
+                  className="block rounded-xl px-4 py-3 text-base font-medium text-gray-700 dark:text-gray-300"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {link.label}

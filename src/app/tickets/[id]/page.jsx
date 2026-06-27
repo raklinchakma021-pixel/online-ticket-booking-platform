@@ -30,7 +30,11 @@ const ticket = await getTicketById(id);
     month: "long",
     day: "numeric",
   });
-
+const departureTime = new Date(ticket.departureDate);
+const isExpired = departureTime <= new Date();
+const bookingDisabled =
+  isExpired || ticket.quantity === 0;
+  console.log(ticket.quantity, typeof ticket.quantity);
   return (
     <main className="min-h-screen bg-zinc-950 text-white p-6 md:p-12">
       <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-10">
@@ -181,14 +185,21 @@ const ticket = await getTicketById(id);
             </div>
           </div>
 
-          <Link
-          
-            href={`/tickets/${id}/booking`}
-            className="w-full mt-8 bg-white text-black"
-            endContent={<ArrowRight />}
-          >
-            Book Now
-          </Link>
+        <Link
+  href={`/tickets/${id}/booking`}
+  className={`w-full mt-8 p-3 ${
+    bookingDisabled
+      ? "bg-gray-500 pointer-events-none cursor-not-allowed"
+      : "bg-white text-black"
+  }`}
+  endContent={<ArrowRight />}
+>
+  {isExpired
+    ? "Trip Expired"
+    : ticket.quantity === 0
+    ? "Sold Out"
+    : "Book Now"}
+</Link>
         </aside>
 
       </div>

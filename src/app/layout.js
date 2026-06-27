@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "TicketBari",
+  title: "NextTrip",
   description: "Online Ticket Booking ",
 };
 

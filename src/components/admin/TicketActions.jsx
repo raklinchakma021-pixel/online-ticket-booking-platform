@@ -6,12 +6,19 @@ import { approveTicket, rejectTicket } from "@/lib/api/tickets.client";
 
 export default function TicketActions({ ticketId }) {
   const router = useRouter();
+const handleApprove = async () => {
+  try {
+    console.log("Approve clicked");
 
-  const handleApprove = async () => {
-    await approveTicket(ticketId);
+    const result = await approveTicket(ticketId);
+
+    console.log("Approve result:", result);
+
     router.refresh();
-  };
-
+  } catch (error) {
+    console.error(error);
+  }
+};
   const handleReject = async () => {
     await rejectTicket(ticketId);
     router.refresh();

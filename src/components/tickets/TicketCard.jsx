@@ -90,7 +90,7 @@ export default function TicketCard({ ticket }) {
           <Link
             
             href={`/tickets/${ticketId}`}
-            className="bg-white text-black"
+            className="bg-white text-black px-3 items-center justify-center py-2 rounded-sm flex "
           >
             View Details
             <ArrowRight size={16} />

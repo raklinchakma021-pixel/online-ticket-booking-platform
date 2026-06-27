@@ -48,7 +48,7 @@ const handleGoogleSignup = async () => {
                 email,
                 password,
                 name,
-                role,
+             
                 
             });
 
@@ -133,7 +133,7 @@ const handleGoogleSignup = async () => {
                         </InputGroup>
                     </TextField>
     {/* Role Selection */}
-                    <div className="flex flex-col gap-4">
+                    {/* <div className="flex flex-col gap-4">
                         <Label>Account Role</Label>
                         <RadioGroup defaultValue="admin" name="role" className="flex" onChange = {value => setRole(value)} orientation="horizontal">
                             <Radio value="user">
@@ -161,7 +161,7 @@ const handleGoogleSignup = async () => {
                                 </Radio.Content>
                             </Radio>
                         </RadioGroup>
-                    </div>
+                    </div> */}
                     {/* Dynamic Status Badges */}
                     {error && (
                         <div className="p-3.5 text-xs font-medium rounded-xl bg-red-100/60 dark:bg-red-950/50 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-900">
